@@ -1,1 +1,1 @@
-{"version":3,"file":"commonHelpers2.js","sources":[],"sourcesContent":[],"names":[],"mappings":""}
+{"version":3,"file":"commonHelpers2.js","sources":["../src/js/2-snackbar.js"],"sourcesContent":["import iziToast from \"izitoast\";\nimport \"izitoast/dist/css/iziToast.min.css\";\n\niziToast.show({\n    title: 'Hey',\n    message: 'What would you like to add?'\n});"],"names":["iziToast"],"mappings":"wIAGAA,EAAS,KAAK,CACV,MAAO,MACP,QAAS,6BACb,CAAC"}
