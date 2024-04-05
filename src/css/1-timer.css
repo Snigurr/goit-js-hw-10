@@ -1,0 +1,42 @@
+.timer{
+    padding: 30px 10px ;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    
+}
+
+.field{
+    display: flex;
+    flex-direction: column;
+}
+
+#datetime-picker{
+    margin-left: 10px;
+}
+
+span.value {
+    font-size: 50px;
+    margin-bottom: 10px;
+}
+
+span.label{
+    text-transform: uppercase;
+}
+
+span{
+  text-align: center;  
+   
+}
+
+#datetime-picker{
+    width: 225px;
+    height: 30px;
+    margin-left: 15px;
+}
+
+[data-start] {
+    height: 36px;
+    width: 80px;
+    font-size: 18px;
+}

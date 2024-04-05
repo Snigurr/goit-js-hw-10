@@ -1,0 +1,27 @@
+.form{
+    width: 400px;
+    font-size: 25px;
+}
+
+[type="submit"]{
+    width: 400px;
+    height: 30px;
+    margin-top: 10px;
+    font-size: 18px;
+}
+
+[name="delay"]{
+    width: 390px;
+    height: 40px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+fieldset{
+    display: flex;
+    flex-direction: row;
+    height: 50px;
+    gap: 20px;
+}
+
