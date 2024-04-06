@@ -37,5 +37,5 @@ form.addEventListener('submit', event => {
   });
 });
 
-const checkbox = document.querySelector('#myCheckbox');
+
 

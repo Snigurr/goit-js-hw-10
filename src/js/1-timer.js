@@ -11,9 +11,9 @@ const hoursMs = document.querySelector("[data-hours]");
 const minutesMs = document.querySelector("[data-minutes]");
 const secondsMs = document.querySelector("[data-seconds]");
 
-let differentTime;
-startBtn.disabled = true;
+let userDate; 
 
+startBtn.disabled = true;
 
 const options = {
   enableTime: true,
@@ -22,14 +22,7 @@ const options = {
   minuteIncrement: 1,
 
   onClose(selectedDates) {
-    const userDate = new Date(selectedDates[0]).getTime();
-    const startDate = Date.now();
-
-    if (userDate >= startDate) {
-      startBtn.disabled = false;
-      differentTime = userDate - startDate;
-      updateClockTime(convertMs(differentTime));
-    } else {
+    if (userDate < Date.now()) {
       startBtn.disabled = true; 
       iziToast.error({
         close: false,
@@ -37,15 +30,16 @@ const options = {
         messageColor: 'white',
         fontSize: 'large',
         backgroundColor: 'red',
-        message: ("Please, choose a date in the future"),
+        message: "Please, choose a date in the future",
         timeout: 2000  
-     })
+      })
+    } else {
+      startBtn.disabled = false;
     }
   },
 };
 
 flatpickr('#datetime-picker', options);
-input.value = ''; 
 
 function zero(val) {
   return String(val).padStart(2, '0');
@@ -57,39 +51,46 @@ function convertMs(ms) {
   const hour = minute * 60;
   const day = hour * 24;
 
-  const days = zero(Math.floor(ms / day));
-  const hours = zero(Math.floor((ms % day) / hour));
-  const minutes = zero(Math.floor(((ms % day) % hour) / minute));
-  const seconds = zero(Math.floor((((ms % day) % hour) % minute) / second));
+  const days = Math.floor(ms / day);
+  const hours = Math.floor((ms % day) / hour);
+  const minutes = Math.floor(((ms % day) % hour) / minute);
+  const seconds = Math.floor((((ms % day) % hour) % minute) / second);
 
   return { days, hours, minutes, seconds };
 }
 
 function updateClockTime({ days, hours, minutes, seconds }) {
-  daysMs.textContent = `${days}`;
-  hoursMs.textContent = `${hours}`;
-  minutesMs.textContent = `${minutes}`;
-  secondsMs.textContent = `${seconds}`;
+  daysMs.textContent = zero(days);
+  hoursMs.textContent = zero(hours);
+  minutesMs.textContent = zero(minutes);
+  secondsMs.textContent = zero(seconds);
 }
 
 let intervalId;
 
-function startTimer(){
+function startTimer() {
   clearInterval(intervalId);
-  intervalId = setInterval(timer, 1000);
+  intervalId = setInterval(() => {
+    const currentDate = Date.now();
+    if (userDate > currentDate) {
+      const timeDifference = userDate - currentDate;
+      updateClockTime(convertMs(timeDifference));
+    } else {
+      clearInterval(intervalId);
+      startBtn.disabled = true;
+    }
+  }, 1000);
+
   startBtn.disabled = true;
   input.disabled = true;
 }
 
-function timer() {
-  if (differentTime > 0) {
-    differentTime = differentTime - 1000;
-    updateClockTime(convertMs(differentTime));
-  } else {
-    clearInterval(intervalId);
-    input.disabled = false;
-  }
-}
-
 startBtn.addEventListener("click", startTimer);
+
+
+input.addEventListener('change', () => {
+  userDate = new Date(input.value).getTime();
+});
+
+
 
